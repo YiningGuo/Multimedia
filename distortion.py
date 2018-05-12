@@ -65,5 +65,25 @@ class Distortion(object):
     result = cv2.remap(img, map_x, map_y, cv2.INTER_LINEAR)
 
     # show the result image
-    plt.imshow(result)
-    plt.show()
+    # plt.imshow(result)
+    # plt.show()
+    return result
+
+if __name__ == '__main__':
+  d = Distortion()
+  origin = cv2.imread("x.jpg")
+
+  plt.subplot(151)
+  plt.imshow(origin)
+  plt.title("origin")
+  plt.axis('off')
+
+  i = 2
+  for direction in d.twist_func:
+    img = d.process("x.jpg", direction)
+    plt.subplot(150 + i)
+    plt.imshow(img)
+    plt.title(direction)
+    plt.axis('off')
+    i += 1
+  plt.savefig("distortion.jpg")
